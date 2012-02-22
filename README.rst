@@ -40,11 +40,11 @@ http://www.djangoproject.com/ .
 2) Install optionnals third party library (YaBlog works fine without).
 
 3) Edit the settings.py file and change the following entries
-    * DATABASES
-    * SECRET_KEY
-    * DONT_USE_CACHE
-    * INSTALLED_APPS
-    * GRAPPELLI_ADMIN_TITLE
+    - DATABASES
+    - SECRET_KEY
+    - DONT_USE_CACHE
+    - INSTALLED_APPS
+    - GRAPPELLI_ADMIN_TITLE
 
 4) Run ./manage.py syncdb
 
