@@ -83,8 +83,10 @@ STATIC_URL = '/staticfiles/'
 # URL prefix for admin static files -- CSS, JavaScript and images.
 # Make sure to use a trailing slash.
 # Examples: "http://foo.com/static/admin/", "/static/admin/".
-#ADMIN_MEDIA_PREFIX = '/staticfiles/admin/'
-ADMIN_MEDIA_PREFIX = STATIC_URL + "grappelli/"
+if not HAVE_GRAPPELLI:
+    ADMIN_MEDIA_PREFIX = '/staticfiles/admin/'
+else:
+    ADMIN_MEDIA_PREFIX = STATIC_URL + "grappelli/"
 
 # Additional locations of static files
 STATICFILES_DIRS = (
@@ -168,7 +170,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
     
-    'django_evolution', # Comment line if not used
+#    'django_evolution', # Comment line if not used
     
     'notification',
     'capatcha',
