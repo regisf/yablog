@@ -1,0 +1,10 @@
+{% extends 'root.html' %}
+
+{% block title %}Tous les articles par mot-clefs{% endblock %}
+
+{% block content %}
+{% for post in blog_posts %}
+    {% include 'blog/content.inc.html' %}
+{% endfor %}
+
+{% endblock %}

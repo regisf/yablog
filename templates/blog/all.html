@@ -1,0 +1,10 @@
+{% extends 'root.html' %}
+
+{% block title %}Tous les articles{% endblock %}
+
+{% block content %}
+{% for post in blog.get_all %}
+    {% include 'blog/content.inc.html' %}
+{% endfor %}
+{% endblock %}
+

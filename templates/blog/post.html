@@ -1,0 +1,118 @@
+{%extends 'root.html'%}
+{%block content%}
+{%load blog_tags%}{% load capatcha_tags image_tags appview_tags cache %}
+{% cache 60 blog_post.pk %}
+<article class="post">
+    <header class="title">
+        <strong>{{blog_post.Title}}</strong>
+        <div>
+            <em>Écrit le {{blog_post.CreationDate}}</em>
+        </div>
+    </header>
+    <section class="content">
+        {{blog_post.Content|safe}}
+    </section>
+    <footer class="footer">
+        <div>{%appview_get_view_count_for blog_post.get_absolute_url as ViewCount%}
+            Vue: {{ViewCount}} fois {%if ViewCount == 0%}<em>(C'est déprimant)</em>{%endif%}
+        </div>
+        <div>
+            Tags : {% for tag in blog_post.Tags.all%}
+            <a href="{%url blog.views.tag tag.id%}">{{tag}}</a>
+            {%if not forloop.last%}, {%endif%}{%empty%}Pas de tag{%endfor%}
+        </div>
+    </footer>
+</article>
+<section class="comment">
+    {%if blog_post.get_visible_comments_count > 0%}
+    <div class="comment-response">
+        En réponse à ce message
+    </div>
+    {%endif%}
+    {%for comment in blog_post.get_visible_comments%}
+    <div class="comment-content">
+        <div class="comment-title">
+            <strong>{{comment.UserName}}</strong> a écrit le {{comment.CreationDate}}
+        </div>
+        <div>
+            <div class="gravatar">
+                {%if comment.Email == blog_post.Author.user.email%}
+                <img src="{{blog_post.Author.image.url|utils_thumbnailize:50}}"  class="gravatar" />
+                {%else%}
+                <img src="http://www.gravatar.com/wavatar/{{comment.gravatar}}?s=50&f=y" class="gravatar" />
+                {%endif%}
+            </div>
+            <div class="comment-body">
+                {{comment.Comment|safe}}
+            </div>
+        </div>
+        <div class="reset"></div>
+    </div>
+    {%empty%}
+    <p>
+        Il n'y a de commentaire
+        {%if blog_post.get_invisible_comments_count > 0%}
+        <em>(en fait si, mais ils sont en attente d'approbation).</em>
+        {%endif%}
+    </p>
+    {%endfor%}
+</section>
+{% endcache %}
+
+{# uncached zone #############################################################}
+
+<a name="comments"></a>
+<section id="add-comment">
+    {%if merci%}
+    <p class="comment-response">
+        Merci pour ton message ami lecteur. Un email de confirmation vous sera envoyé lors de sa publication.
+    </p>
+    {%else%}
+    <p class="comment-response">
+        Toi aussi ami lecteur, donne ton avis !
+    </p>
+    <form action="/blog/comment/{{blog_post.id}}/" method="post">
+        {%csrf_token%}
+        <div class="line{%if name_err%} error{%endif%}">
+            <label>
+                Votre nom
+            </label>
+            <input type="text" name="name" size="50" value="{{name}}"/>{%if name_err%}<span class="error">{{name_err}}</span>{%endif%}
+        </div>
+        <div class="line{%if email_err%} error{%endif%}">
+            <label>
+                Votre email
+            </label>
+            <input type="text" name="email" size="50" value="{{email}}"/>{%if email_err%}<span class="error">{{email_err}}</span>{%endif%}
+        </div>
+        <div class="line{%if body_err%} error{%endif%}">
+            <label>
+                Votre commentaire
+            </label>
+            <textarea name="body" cols="80" rows="12">{{body}}</textarea>
+            {%if body_err%}<span class="error">{{body_err}}</span>{%endif%}
+        </div>
+        {%create_capatcha%}
+        <div class="line{%if capat_err%} error{%endif%}">
+            <label>
+                &nbsp;
+            </label>
+            <img src="{{capatcha.path}}" />
+        </div>
+        <div class="line{%if capat_err%} error{%endif%}">
+            <label>
+                Code antispam
+            </label>
+            <input type="text" name="capatcha" />{%if capat_err%}<span class="error">{{capat_err}}</span>{%endif%}
+        </div>
+        <div class="line">
+            <label>
+                &nbsp;
+            </label>
+            <input type="submit" value="Envoyer" class="button button-send"/>
+        </div>
+        <p><em>Les messages sont soumis à l'approbation du blogueur</em></p>
+    </form>
+    {%endif%}
+</section>
+{%endblock%}

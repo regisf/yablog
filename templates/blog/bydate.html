@@ -1,0 +1,9 @@
+{%extends 'root.html'%}
+
+{% block title %}Liste des articles par {{ date_type }}{% endblock %}
+
+{%block content%}
+    {%for post in blog_post%}
+        {%include 'blog/content.inc.html'%}
+    {%endfor%}
+{%endblock%}

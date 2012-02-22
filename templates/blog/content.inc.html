@@ -1,0 +1,31 @@
+{%load appview_tags%}
+<article class="post">
+    <header class="title"><strong><a href="{%url blog.views.article_short post.Shortcut%}">{{post.Title}}</a></strong>
+        <div><em>Écrit le {{post.CreationDateTime|date:"D F Y"}}</em></div>
+    </header>
+    <section>
+        <div class="content">
+        {%if blog.showFullArticle%}
+            {{post.Content|safe}}
+        {%else%}
+            {{post.Content|truncatewords_html:blog.articleSampleLength|safe}}
+            <div class="la-suite">
+            <a href="{%url blog.views.article_short post.Shortcut%}" class="button button-read">Lire la suite</a>
+            </div>
+        {%endif%}
+        </div>
+        <div class="footer">{%appview_get_view_count_for post.get_absolute_url as ViewCount%}
+            <div>
+                Vue: {{ViewCount}} fois {%if ViewCount == 0%}<em>(C'est déprimant)</em>{%endif%}
+            </div>
+            <div>
+                Tags : {%for tag in post.Tags.all%}
+                <a href="{%url blog.views.tag tag.id%}">{{tag}}</a>
+                {%if not forloop.last%}, {%endif%}{%empty%}Pas de tag{%endfor%}
+            </div>
+            <div>
+                {%if post.Commentaire.count == 0%}Pas de{%else%}<a href="{%url blog.views.article_short post.Shortcut%}#comments">{{post.get_visible_comments.count}}{%endif%} commentaire{{post.get_visible_comments.count|pluralize}}</a>
+            </div>
+        </div>
+    </section>
+</article>

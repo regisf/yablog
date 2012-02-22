@@ -1,0 +1,29 @@
+{% extends 'root.html' %}
+
+{% load blog_tags %}
+
+{% block title %}Résultats de recherche{% endblock %}
+
+{% block content %}
+<h1 class="erika">Résultat de recherche</h1>
+<div>
+    Avec ces mots Clef : {% for k in keywords %}<strong>{{ k }}</strong>{% if not forloop.last %} ou{% endif %}{% endfor %}
+</div>
+
+<div class="search-result">
+{%for post in post_found %}
+    <div class="search-block">
+        <div class="search-title">
+        <a href="{% url show_article post.Shortcut %}" title="Lire l'article">{{ post.Title }}</a>
+        </div>
+        <div class="search-content">
+            {{ post.Content|striptags|boldize:keywords|safe }}
+        </div>
+    </div>
+{% empty %}
+    <div class="search-content">
+        Votre recherche n'a donné aucun résultat
+    </div>
+{% endfor %}
+</div>
+{% endblock %}

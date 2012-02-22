@@ -1,0 +1,296 @@
+@font-face {
+    font-family: "code";
+    src: url("/staticfiles/fonts/MonoSpatial.ttf");
+}
+
+@font-face {
+    font-family: "erika";
+    src: url("/staticfiles/fonts/ErikaOrmig.ttf");
+}
+
+body {
+    font-family: sans-serif;
+    font-size: 12px;
+}
+pre {
+    font-family: code;
+}
+a {
+    text-decoration: none;
+    color: #000;
+}
+
+#header {
+    margin-bottom: 15px;
+    border: 1px solid #aeaeae;
+    padding: 5px;
+    margin-bottom: 15px;
+    background: transparent url("/staticfiles/images/johnpwarren_Antenna_and_radio_waves.png") no-repeat scroll center right;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -o-border-radius: 5px;
+    border-radius: 5px; 
+
+    -moz-box-shadow: 2px 2px 5px #ccc;
+    -webkit-box-shadow:2px 2px 5px #ccc;
+    box-shadow:2px 2px 5px #ccc;
+}
+#header h1 {
+     font-family: erika;
+     font-size: 48px;
+    text-shadow:2px 2px 5px #ccc;     
+}
+h1.erika {
+font-family: erika;
+}
+div.wait {
+    text-align:center;
+    display: none;
+}
+    
+#content {
+    width: 75%;
+    float: left;
+}
+
+.post {
+    margin-bottom: 15px;
+    border: 1px solid #aeaeae;
+    padding: 5px;
+    margin-bottom: 15px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+
+    -moz-box-shadow: 2px 2px 5px #ccc;
+    -webkit-box-shadow:2px 2px 5px #ccc;
+    box-shadow:2px 2px 5px #ccc;
+}
+
+.post .title {
+    padding: 5px;
+    font-family: erika;
+    font-size: 18px;
+    text-shadow: 1px 1px 1px #aeaeae;
+}
+
+.post .title em {
+    font-size: 10px;
+}
+
+.post .content {
+    border-top: none;
+    padding: 10px;
+}
+.post .content a {
+    color: blue;
+}
+.post .content .la-suite {
+    margin-top: 30px;
+    text-align: right;
+    font-size: 10px;
+}
+.post .content .la-suite a {
+    color: black;
+}
+.post .footer {
+    padding: 5px;
+}
+
+.comment {
+    margin-top: 20px;
+}
+.comment-title {
+    font-size: 10px;
+}
+.comment-content {
+    border: 2px solid #aeaeae;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 20px 0 0 20px;
+}
+.comment-body {
+    padding-left: 30px;
+}
+#add-comment form {
+    border: 1px solid #aeaeae;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 20px 0 20px 20px;
+}
+.comment-response {
+    font-family: erika;
+    font-size: 24px;
+    text-align: center;
+}
+
+form label {
+    width: 170px;
+    float: left;
+}
+
+form .line {
+    margin-bottom: 10px;
+}
+
+form input, form textarea, form button {
+    border:1px solid #000;
+}
+
+#menu {
+    float: right;
+    width: 24%;
+    margin-left:1%;
+}
+
+.menublock {
+    border: 1px solid #aeaeae;
+    padding: 5px;
+    margin-bottom: 15px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+
+    -moz-box-shadow: 2px 2px 5px #ccc;
+    -webkit-box-shadow:2px 2px 5px #ccc;
+    box-shadow:2px 2px 5px #ccc;
+}
+
+.menu-title {
+    font-family: erika;
+    font-size: 18px;
+    text-shadow: 1px 1px 1px #aeaeae;
+    margin-bottom: 10px;
+}
+.menublock .item {
+    padding: 0 0 5px 20px;
+}
+
+.year {
+    font-weight: bold;
+}
+.month {
+    margin-left: 20px;
+}
+#content {min-height: 50%;}
+a[href^=http] {
+    background: transparent url("/staticfiles/images/external.png") no-repeat center right;
+    padding-right: 15px;
+}
+
+a[href^=http].no-link {
+    background: none;
+    padding-right: none;
+}
+
+.error input {
+    border:1px solid #f00;
+}
+span.error , .error label {
+    color: #f00;
+}
+
+#footer {
+     width: 50%;
+     margin: 0 auto; 
+     margin-top: 40px;
+     text-align: center;
+     clear:both;
+}
+
+#footer hr {
+    margin-top: 20px;
+    border: 1px dashed #000;
+}
+
+.button {
+    border-radius: 5px;
+    border:1px solid #aeaeae;
+    background: transparent url("/staticfiles/images/button.png");
+    cursor: pointer;
+}
+.button-read, .button-send {
+    padding: 8px 10px 8px 10px;
+}
+.button-read:hover, .button-send:hover{
+    color: #fff;
+    background-position: 0 -50px;
+}
+#get-next {
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+#get-next:hover{
+    color: #fff;
+    background-position: 0 -50px;
+}
+div.gravatar {
+    vertical-align: top;
+    float: left;
+}
+img.gravatar {
+    margin-right: 10px;
+}
+.reset {
+    clear: both;
+}
+.tag1 {
+    font-size: 10px;
+}
+.tag2 {
+    font-size: 12px;
+}
+.tag3 {
+    font-size: 14px;
+}
+.tag4 {
+    font-size: 16px;
+}
+.tag5 {
+    font-size: 18px;
+}
+.tag6 {
+    font-size: 20px;
+}
+.tag-cloud {
+    text-align: justify;
+}
+#have-plan {
+    font-size: 8px;
+    float:right;
+    margin-bottom: 20px;
+}
+#have-plan a {
+    background:none;
+    color:#aeaeae;
+}
+input#search {
+height: 20px;
+border-radius: 5px;
+margin-right: 5px;
+width: 230px;
+}
+input#search-button {
+background: transparent url("/staticfiles/images/find.png") no-repeat center center;
+height: 20px;
+border: none;
+}
+.search-result {
+    margin-top: 20px;
+}
+.search-title {
+    font-family: erika;
+    font-size: 18px;
+}
+.search-content {
+margin: 0 0 20px 20px;
+}
+.search-block {
+margin: 0 0 20px 20px;
+clear: both;
+}
