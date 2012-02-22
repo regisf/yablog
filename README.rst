@@ -39,7 +39,7 @@ http://www.djangoproject.com/ .
 
 2) Install optionnals third party library (YaBlog works fine without).
 
-3) Edit the settings.py file and change the following entries:
+3) Edit the settings.py file and change the following entries
     * DATABASES
     * SECRET_KEY
     * DONT_USE_CACHE
