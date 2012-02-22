@@ -38,6 +38,9 @@ class BlogConfig(object):
      def get_title(self):
           return self.pref.Name
      
+     def get_subtitle(self):
+        return self.pref.SubTitle
+        
      def get_last_posts(self):
           return self.get_posts()[:self.maxLatestDisplayed()]
          

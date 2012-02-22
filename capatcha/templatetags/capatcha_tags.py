@@ -27,7 +27,7 @@ class Capatcha(object):
         try:
             pref = Preference.objects.get(id=1)
         except:
-            raise Exception(u"Les préférences ne sont pas renseignées")
+            raise Exception(u"Captcha preferences are not set.")
 
         # Remove old capatcha
         now = datetime.datetime.now()

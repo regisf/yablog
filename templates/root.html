@@ -73,7 +73,7 @@
                     </header>
                     <div class="item tag-cloud">
                     {%for count, size, tag in blog.get_tags%}
-                    <span class="tag{{size}}"><a href="{%url show_by_tag tag.id%}" title="{{count}} article{{count|pluralize}}">{{tag.Nom}}</a> </span>
+                    <span class="tag{{size}}"><a href="{%url show_by_tag tag.id%}" title="{{count}} article{{ count|pluralize }}">{{tag.Nom}}</a> </span>
                     {%endfor%}
                     </div>
                 </section>

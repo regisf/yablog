@@ -40,17 +40,32 @@ http://www.djangoproject.com/ .
 2) Install optionnals third party library (YaBlog works fine without).
 
 3) Edit the settings.py file and change the following entries
-    - DATABASES
-    - SECRET_KEY
-    - DONT_USE_CACHE
-    - INSTALLED_APPS
-    - GRAPPELLI_ADMIN_TITLE
+    * DATABASES: The default is MyBlog.db with SQLite3 engine
+    * SECRET_KEY: 
+    * DONT_USE_CACHE: Set it to True to avoid caching system
+    * INSTALLED_APPS: Uncomment lines for optionnal libraries
+    * GRAPPELLI_ADMIN_TITLE: Change this for your real blog name. If you're using grappelli of course.
 
 4) Run ./manage.py syncdb
 
 5) To dive into development create two empty files named debug and devlocal.
 
-6) Create the cache table with ./manage.py createcachetable cache. 
+6) Create the cache table with ./manage.py createcachetable cache
+
+7) type ./manage.py runserver and open a browser at http://localhost:8000/admin/
+   For Windows user (especially with Windows 7) prefer http://127.0.0.1:8000/admin/
+   Enter your login name and password and go to Blog->Preferences. Create a new
+   entry and enter your blog name and it's subtitle. Save your preferences.
+
+8) That's all... You can start to design your template (see ::Templates).
+
+9) If you want to add 
+
+
+Templates
+---------
+   
+
 
 
 

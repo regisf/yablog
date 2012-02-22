@@ -29,8 +29,8 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '',                      # Or path to database file if using sqlite3.
+        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'mydb.db',                      # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -94,9 +94,9 @@ STATICFILES_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(PROJECT_PATH, "static"),
-    os.path.join(PROJECT_PATH, "ckeditor", "static") or '', # Optionnal
-    os.path.join(PROJECT_PATH, "grappelli", "static") or '', # Optionnal
-    os.path.join(PROJECT_PATH, "filebrowser", "static") or '', # Optionnal
+#    os.path.join(PROJECT_PATH, "ckeditor", "static"), # Optionnal
+#    os.path.join(PROJECT_PATH, "grappelli", "static"), # Optionnal
+#    os.path.join(PROJECT_PATH, "filebrowser", "static"), # Optionnal
 )
 
 # List of finder classes that know how to find static files in
@@ -111,7 +111,7 @@ STATICFILES_FINDERS = (
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
 if not HAVE_GRAPPELLI:
-    ADMIN_MEDIA_PREFIX = '/media/'
+    ADMIN_MEDIA_PREFIX = '/staticfiles/admin/'
 else:
     ADMIN_MEDIA_PREFIX = STATIC_URL + "grappelli/"
 
