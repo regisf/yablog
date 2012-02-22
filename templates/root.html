@@ -2,40 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     {% load blog_tags %}
     <head>
-        <meta name="google-site-verification" content="73qP5Lb4hSu6fHoWPmdVH_5RHVXUmNuvtstLbfrgKZQ" />
         <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-        <meta name="msvalidate.01" content="5AC9425FC32621377FDD9DE5189E2CAB" />
-        <link rel="alternate" type="application/rss+xml" title="RSS" href="http://www.regisblog.fr/blog/rss/" />
         <title>{{ blog.get_title }} - {% block title %}{% endblock %}</title>
-        <style type="text/css">
-            @import url("{{STATIC_URL}}css/style.css");
-        </style>
-        <script type="text/javascript">
-            var _gaq = _gaq || [];
-            _gaq.push(['_setAccount', 'UA-18026691-9']);
-            _gaq.push(['_trackPageview']);
-            ( function() {
-                    var ga = document.createElement('script');
-                    ga.type = 'text/javascript';
-                    ga.async = true;
-                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-                    var s = document.getElementsByTagName('script')[0];
-                    s.parentNode.insertBefore(ga, s);
-                })();
-        </script>
-        <script type="text/javascript" src="https://apis.google.com/js/plusone.js">{lang: 'fr'}</script>
-        <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script>
-        <script type="text/javascript" src="http://balupton.github.com/jquery-syntaxhighlighter/scripts/jquery.syntaxhighlighter.min.js"></script>
-        <script type="text/javascript" src="{{ STATIC_URL }}js/regisblog.js"></script>
         <!--[if lte IE 8]>
         <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script></style>
         <![endif]-->
     </head>
     <body>
         <header id="header">
-            <div id="have-plan">
-                <a href="http://www.fsf.org/" target="_blank">Et nous avons un plan...</a>
-            </div>
             <a href="/">
             <h1>{{ blog.get_title }}</h1>
             <h5>{{ blog.get_subtitle }}</h5>
@@ -48,21 +22,7 @@
             <aside id="menu">
                 <section class="menublock">
                     <header class="menu-title">
-                        Socialités
-                    </header>
-                    <div class="item">
-                        <a href="/blog/rss/">
-                            <img src="{{STATIC_URL}}images/feed.png" width="24" height="24" title="Abonnez vous au flux" alt="icon rss" border="0"/>
-                        </a>
-                        <a href="https://plus.google.com/117327341139168133125/posts" target="_blank" class="no-link">
-                            <img src="{{STATIC_URL}}images/googleplus.png" width="24" height="24" title="Suivez moi sur Google+" />
-                        </a>
-                        <g:plusone></g:plusone>
-                    </div>
-                </section>
-                <section class="menublock">
-                    <header class="menu-title">
-                        Rechercher
+                        Search
                     </header>
                     <section class="item">
                         <form action="{% url search %}" method="post">
@@ -73,7 +33,7 @@
                 </section>
                 <section class="menublock">
                     <header class="menu-title">
-                        Dernière publication
+                        Last publications
                     </header>
                     {%for post in blog.get_latest%}
                     <div class="item">
@@ -83,7 +43,7 @@
                 </section>
                 <section class="menublock">
                     <header class="menu-title">
-                        Catégories
+                        Categories
                     </header>
                     {%for categ in blog.get_categories%}
                     <div class="item">
@@ -93,7 +53,7 @@
                 </section>
                 <section class="menublock">
                     <header class="menu-title">
-                        Historique
+                        Archives
                     </header>
                     {%for year, monthes in blog.get_history.items%}
                     <div class="item">
@@ -120,10 +80,7 @@
             </aside>
         </div>
         <footer id="footer">
-            <hr />
-            &copy; Régis FLORET 2010 et plus tard
-            <br/>
-            Il n'y a rien de plus con que de dire avec quoi le blog est fabriqué.
+            This is your footer
         </footer>
     </body>
 </html>
