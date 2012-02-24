@@ -5,10 +5,14 @@ For my own pleasure and my own needs, I wrote a blog program. Who needs a
 very powerful and very efficient and very slow blog program (yes, I'm looking
 at you both Wordpress and DotClear). 
 
-YaBlog is not designed to be "Ready To Go" blog but to be a "Wait I'm writing 
-the main template"
+YaBlog is not:
+    * Designed to be "Ready To Go" blog but to be a "Wait I'm writing  the main template"
+    * For beginners.
 
-YaBlog is not for beginners.
+YaBlog is:
+    * Written in Python
+    * Fast
+    * Minimalistic
 
 Prerequirement
 --------------
@@ -57,7 +61,7 @@ http://www.djangoproject.com/ .
    Enter your login name and password and go to Blog->Preferences. Create a new
    entry and enter your blog name and it's subtitle. Save your preferences.
 
-8) That's all... You can start to design your template (see ::Templates).
+8) That's all... You can start to design your template (see Templates).
 
 9) If you want to add 
 

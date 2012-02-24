@@ -12,18 +12,7 @@ from django.utils.translation import ugettext as _
 
 from notification import notification_send, ajax_log
 from blog.models import *
-from blog.templatetags.blog_tags import BlogConfig
 from appview.decorators import view_count
-
-def createContext(request, d={}):
-    """ Simple wait create context variable without using 
-    Template Context Processor"""
-    d.update({
-        'name': request.session.get('nom', ''),
-        'email': request.session.get('email', ''),
-        'blog': BlogConfig()
-    })
-    return  RequestContext(request, d)
 
 
 def robot(request):
@@ -38,13 +27,13 @@ def maintenance(request):
 @view_count
 def index(request):
     """ Page d'accueil du blog """
-    return render_to_response(settings.BLOG_CONFIG.Templates.index, createContext(request, {'blog': BlogConfig()}))
+    return render_to_response(settings.BLOG_CONFIG.Templates.index, RequestContext(request))
 
 # article view is template cached
 @view_count
 def article_short(request, article_short):
     """ Display a article """
-    context = createContext(request)
+    context = RequestContext(request)
     post = Post.objects.get(Shortcut=article_short)
 
     if not request.user.is_authenticated():
@@ -64,7 +53,7 @@ def article_short(request, article_short):
 @view_count
 def articles(request):
     """ Show all articles in the blog """
-    context = createContext(request)
+    context = RequestContext(request)
     return render_to_response(settings.BLOG_CONFIG.Templates.all, context)
     
 def comment(request, article_id):
@@ -125,7 +114,7 @@ def comment(request, article_id):
 @view_count
 def tag(request, tag_id):
     """ Renvoi tous les articles ayant un tag : tag_id (m'enfin je me conprends)"""
-    context = createContext(request, {
+    context = RequestContext(request, {
         'blog_posts' : Post.objects.filter(Tags__pk=tag_id, Publish=True),
         'blog_tag' : Tag.objects.get(pk=tag_id).Nom       
     })
@@ -135,7 +124,7 @@ def tag(request, tag_id):
 @view_count
 def categories(request, categ_id):
     """ Renvoi tous les articles appartenant à une catégorie """
-    context = createContext(request, {
+    context = RequestContext(request, {
         'blog_posts': Post.objects.filter(Categorie__pk=categ_id, Publish=True),
         'blog_categorie': Categorie.objects.get(id=categ_id).Nom
     })
@@ -144,21 +133,15 @@ def categories(request, categ_id):
 @cache_page(60)
 @view_count
 def show_by_date(request, year, month=None):
+    """ Show by date. This controller is using for both by_month and by_year """
     query = Q(Publish=True) & Q(CreationDateTime__year=year)
     if month is not None:
         query &= Q(CreationDateTime__month=month)
-    context = createContext(request, {
+    context = RequestContext(request, {
         'blog_post': Post.objects.filter(query)
     })
     return render_to_response(settings.BLOG_CONFIG.Templates.year, context)
 
-#@cache_page(60)
-#@view_count
-#def show_by_month(request, year, month):
-#    context = createContext(request, {
-#        'blog_post': Post.objects.filter(CreationDate__year=year, CreationDate__month=month, Publish=True)
-#    })
-#    return render_to_response(settings.BLOG_CONFIG.Templates.month, context)
 
 def search(request):
     """ Search engine (quite simple) """
@@ -173,5 +156,5 @@ def search(request):
     else:
         p = []
         keywords = [_("No keyword set") ]
-    context = createContext(request, { 'keywords' : keywords, 'post_found': p })
+    context = RequestContext(request, { 'keywords' : keywords, 'post_found': p })
     return render_to_response(settings.BLOG_CONFIG.Templates.search, context)
