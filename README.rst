@@ -60,16 +60,36 @@ http://www.djangoproject.com/ .
    For Windows user (especially with Windows 7) prefer http://127.0.0.1:8000/admin/
    Enter your login name and password and go to Blog->Preferences. Create a new
    entry and enter your blog name and it's subtitle. Save your preferences.
+   
+   If you don't add your preferences, YaBlog will create them for you.
 
 8) That's all... You can start to design your template (see Templates).
 
-9) If you want to add 
+9) If you want to add commentaries to the blog. Go to the admin -> capatcha and
+   create a new preference row. Upload the font (TTF) and the background. Save it.
+   (see Capatcha). 
+   
+   Go the notification -> preferences -> add and add a new preference. Enter the 
+   server name (this is for administraton), the email of the sender, the SMTP user
+   the SMTP user password, the SMTP server domain (eg: smtp.myblog.com).
+   
+   If your smtp don't need user authentification check Anonymous.
+   
+   (see Notification)
+
 
 
 Templates
 ---------
+Todo
    
+Capatcha
+--------
+Todo
 
+Notification
+------------
+Todo
 
 
 
