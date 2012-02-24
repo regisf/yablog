@@ -5,6 +5,7 @@ AppView
 """
 
 import re
+from django.utils.translation import ugettext as _
 
 from django.db import models
 
@@ -12,15 +13,15 @@ class Exclude(models.Model):
     """
     Store exclusion
     """
-    name = models.CharField(max_length=140)
-    exclude_regex = models.CharField(max_length=140, blank=True)
-    exclude_IP = models.IPAddressField(blank=True)
+    name = models.CharField(max_length=140, verbose_name=_("Name"))
+    exclude_regex = models.CharField(max_length=140, blank=True, verbose_name=_("Exclude Regex"))
+    exclude_IP = models.IPAddressField(blank=True, verbose_name=_("Exclude IP"))
     
     def __unicode__(self):
         return self.name
     
     def match(self, browser):
-        """ """
+        """ test if the client is in the exclusion db  """
         return  len(re.findall(self.exclude_regex, browser, re.I)) > 0
         
 class View(models.Model):

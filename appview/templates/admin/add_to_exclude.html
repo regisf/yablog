@@ -1,23 +1,23 @@
 {%extends 'admin/base_site.html'%}
-{%block content%}
+{%block content%}{% load i18n %}
 <h1>
-    Add to exclusion list.
+    {%trans 'Add to exclusion list.' %}
 </h1>
-<p>
+<p>{% blocktrans %}
     Would you like to add those entries to the exclusion list ?<br/>
-    Only the first item is selected.
+    Only the first item is selected.{% endblocktrans %}
 </p>
 <div id="content-main">
 <ul>
-    <li><strong>IP Address:</strong> {{entry.ip}}</li>
-    <li><strong>Browser signature:</strong> {{entry.browser}}</li>
+    <li><strong>{% trans 'IP Address:' %}</strong> {{entry.ip}}</li>
+    <li><strong>{% trans 'Browser signature:' %}</strong> {{entry.browser}}</li>
 </ul>
 <form action="" method="post">
     {%csrf_token%}
     {{form_action.as_p}}  
     <input type="hidden" name="action" value="add_to_exclusion" />
-    <input type="submit" name="apply"  value="Add to exclusion" />
-    <input type="submit" name="cancel" value="Cancel" />
+    <input type="submit" name="apply"  value="{% trans 'Add to exclusion' %}" />
+    <input type="submit" name="cancel" value="[% trans 'Cancel' %}" />
 </form>
 </div>
 {%endblock%}
