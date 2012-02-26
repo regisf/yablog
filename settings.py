@@ -205,7 +205,6 @@ class BLOG_CONFIG:
         categories ='blog/tags.html'
         month =     'blog/bydate.html'
         year =      'blog/bydate.html'
-        all_post =  'blog/all.html'
         search =    'blog/search.html'
         all =       'blog/all.html'
     Download = "downloads"

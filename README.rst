@@ -73,13 +73,33 @@ http://www.djangoproject.com/ .
    server name (this is for administraton), the email of the sender, the SMTP user
    the SMTP user password, the SMTP server domain (eg: smtp.myblog.com).
    
-   If your smtp don't need user authentification check Anonymous.
+   If your smtp don't need user authentification check Anonymous (that's the case
+   at home)
    
    (see Notification)
 
 Templates
 ---------
-Todo
+With Django you don't have to reinvent the wheel. YaBlog use the Django template
+system with few calls to the API.
+
+
+All templates name are registred in the settings.py file in BLOG_CONFIG class
+(~ line 200).
+For the full featured blog create 9 templates :
+    * index.html : the blog home page
+    * all.html : display all blog entries
+    * tags.html : display all blog entries by tag
+    * categories.html : display all blog entries by category
+    * month : display all blog entries for a particular month 
+    * year : display all blog entries for a year
+    * search : display all blog entries after a search
+
+For a perfect work, YaBlog need only one template :  index.html, the blog home
+page.
+
+
+
    
 Capatcha
 --------

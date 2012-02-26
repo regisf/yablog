@@ -35,7 +35,7 @@
                     <header class="menu-title">
                         Last publications
                     </header>
-                    {%for post in blog.get_latest%}
+                    {%for post in blog.get_last_posts%}
                     <div class="item">
                         <a href="{%url show_article post.Shortcut%}">{{post.Title}}</a>
                     </div>

@@ -54,11 +54,8 @@ class BlogConfig(object):
           return self.get_posts()[:self.maxLatestDisplayed()]
          
      def get_posts(self):
-          return Post.objects.filter(Publish=True).order_by("-CreationDateTime","-id")
-     
-     def get_latest(self):
-          return self.get_posts()[:self.maxLatestDisplayed()]
-         
+          return Post.objects.filter(Publish=True)
+              
      def get_categories(self):
           return Categorie.objects.all()
           
