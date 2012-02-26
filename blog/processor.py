@@ -113,9 +113,6 @@ class BlogConfig(object):
           for d in date.keys():
               date[d].sort()
           return date
-     
-     def get_all(self):
-          return Post.objects.filter(Publish=True)
     
 def blog_init(request):
     ''' Add all needed variable in the context instead using createContext '''

@@ -98,7 +98,15 @@ For the full featured blog create 9 templates :
 For a perfect work, YaBlog need only one template :  index.html, the blog home
 page.
 
+In the Template Context Processor, YaBlog define a blog object. All the API
+calls are from this object (e.g.: {{ blog.do_that }})
 
+blog.get_title : The blog title
+blog.get_subtitle : The blog subtitle
+blog.last_posts : The blog last posts limited with the Preference.maxLatestDisplayed
+                  entry (default is 5)
+blog.get_posts: Get all posts
+blog.get_categories: Get all categories
 
    
 Capatcha

@@ -3,7 +3,7 @@
 {% block title %}{% trans 'All articles' %}{% endblock %}
 
 {% block content %}
-{% for post in blog.get_all %}
+{% for post in blog.get_posts %}
     {% include 'blog/content.inc.html' %}
 {% endfor %}
 {% endblock %}
