@@ -1,3 +1,27 @@
+# -*- coding: UTF-8 -*-
+# YaBlog
+#  (c) Regis FLORET
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+#    * Redistributions of source code must retain the above copyright
+#      notice, this list of conditions and the following disclaimer.
+#    * Redistributions in binary form must reproduce the above copyright
+#      notice, this list of conditions and the following disclaimer in the
+#      documentation and/or other materials provided with the distribution.
+#    * Neither the name of the <organization> nor the
+#      names of its contributors may be used to endorse or promote products
+#      derived from this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+# ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL Regis FLORET BE LIABLE FOR ANY
+# DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+# (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+# LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+# ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+# SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # -*- coding: utf-8 -*-
 
 import re
@@ -101,6 +125,13 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse("blog.views.article_short", args=(self.Shortcut,))
   
+class PreferenceManager(models.Manager):
+    def get_name(self):
+        super(PreferenceManager, self).get_query_set().all()[0].Name
+    
+    def get_subtitle(self):
+        super(PreferenceManager, self).get_query_set().all()[0].SubTitle
+    
 class Preference(models.Model):
     Name = models.CharField(max_length=100, help_text=u"Nom du blog")
     SubTitle = models.CharField(max_length=100, help_text=u"Sous titre du blog")
@@ -110,8 +141,15 @@ class Preference(models.Model):
     AllowComments = models.BooleanField(default=False, help_text=u"Permet les commentaires")
     MaxLastestDisplayed = models.SmallIntegerField(default=5, help_text=u"Nombre maximum des dernières dépêches affichées.")
     
+    objects = PreferenceManager()
+    
     def __unicode__(self):
         return "Preferences"
+    
+    @classmethod
+    def get_preferences(self):
+        return Preference.objects.all()[0]
+        
     
 class Tag(models.Model):
     Nom = models.CharField(max_length=100)

@@ -77,8 +77,6 @@ http://www.djangoproject.com/ .
    
    (see Notification)
 
-
-
 Templates
 ---------
 Todo

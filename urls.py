@@ -34,11 +34,11 @@ urlpatterns = patterns('',
 #    url(r'^admin/filebrowser/', include(site.urls)),
 
     # Administration
-    url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/doc/',     include('django.contrib.admindocs.urls')),
+    url(r'^admin/',         include(admin.site.urls)),
 
-    url(r'^blog/', include('blog.urls')),
-    url(r'^$', 'blog.views.index'),
+    url(r'^blog/',          include('blog.urls')),
+    url(r'^$',              'blog.views.index',                 name="home"),
     
     #(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', 
     url(r'^sitemap\.xml', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': {'blog':BlogSitemap}}),

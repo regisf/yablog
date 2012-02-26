@@ -1,6 +1,6 @@
 {%load appview_tags%}
 <article class="post">
-    <header class="title"><strong><a href="{%url blog.views.article_short post.Shortcut%}">{{post.Title}}</a></strong>
+    <header class="title"><strong><a href="{%url show_article post.Shortcut%}">{{post.Title}}</a></strong>
         <div><em>Écrit le {{post.CreationDateTime|date:"D F Y"}}</em></div>
     </header>
     <section>
@@ -10,7 +10,7 @@
         {%else%}
             {{post.Content|truncatewords_html:blog.articleSampleLength|safe}}
             <div class="la-suite">
-            <a href="{%url blog.views.article_short post.Shortcut%}" class="button button-read">Lire la suite</a>
+            <a href="{%url show_article post.Shortcut%}" class="button button-read">Lire la suite</a>
             </div>
         {%endif%}
         </div>
@@ -24,7 +24,7 @@
                 {%if not forloop.last%}, {%endif%}{%empty%}Pas de tag{%endfor%}
             </div>
             <div>
-                {%if post.Commentaire.count == 0%}Pas de{%else%}<a href="{%url blog.views.article_short post.Shortcut%}#comments">{{post.get_visible_comments.count}}{%endif%} commentaire{{post.get_visible_comments.count|pluralize}}</a>
+                {%if post.Commentaire.count == 0%}Pas de{%else%}<a href="{%url show_article post.Shortcut%}#comments">{{post.get_visible_comments.count}}{%endif%} commentaire{{post.get_visible_comments.count|pluralize}}</a>
             </div>
         </div>
     </section>

@@ -1,3 +1,27 @@
+# -*- coding: UTF-8 -*-
+# YaBlog
+#  (c) Regis FLORET
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+#    * Redistributions of source code must retain the above copyright
+#      notice, this list of conditions and the following disclaimer.
+#    * Redistributions in binary form must reproduce the above copyright
+#      notice, this list of conditions and the following disclaimer in the
+#      documentation and/or other materials provided with the distribution.
+#    * Neither the name of the <organization> nor the
+#      names of its contributors may be used to endorse or promote products
+#      derived from this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+# ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL Regis FLORET BE LIABLE FOR ANY
+# DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+# (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+# LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+# ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+# SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # -*- coding: utf-8 -*-
 
 from django.template import loader, RequestContext
@@ -70,23 +94,23 @@ def comment(request, article_id):
 
                 error = False
                 if not len(name):
-                    context['name_err'] = u"Merci de laisser votre nom"
+                    context['name_err'] = _("Thanks to leave name")
                     error = True
                 if not len(email):
-                    context['email_err'] = u"Votre adresse email est vide"
+                    context['email_err'] = _("Your email address is empty")
                     error = True
                 else:
                     if not email_re.match(email):
-                        context['email_err'] = u"Votre email n'est pas valide"
+                        context['email_err'] = _('Your email address is not a valid one')
                         error = True
 
                 if not len(body):
-                    context['body_err'] = u"Le corps de votre message est vide"
+                    context['body_err'] = _("The message body is empty")
                     error = True
 
                 if not request.session['capatcha'].isValid(post['capatcha']):
                     error = True
-                    context['capat_err'] = u"Code et entrée différente"
+                    context['capat_err'] = _("Wrong secure code")
 
                 if error:
                     context['name'] = name
@@ -103,7 +127,7 @@ def comment(request, article_id):
                     comment.post = context['blog_post']
                     comment.save()
                     context['merci'] = True
-                    notification_send('newcomment')
+                    notification_send(settings.BLOG_CONFIG.EmailTemplates.newcomment)
                 return HttpResponse(loader.render_to_string(settings.BLOG_CONFIG.Templates.post, context))
     except Exception, e:
         ajax_log("Erreur in comment: %s " % e)
@@ -113,7 +137,7 @@ def comment(request, article_id):
 @cache_page(60)
 @view_count
 def tag(request, tag_id):
-    """ Renvoi tous les articles ayant un tag : tag_id (m'enfin je me conprends)"""
+    """ Send all articles with the tag. @todo: replace pk with sanitize_name(tag_name) """
     context = RequestContext(request, {
         'blog_posts' : Post.objects.filter(Tags__pk=tag_id, Publish=True),
         'blog_tag' : Tag.objects.get(pk=tag_id).Nom       
@@ -123,7 +147,7 @@ def tag(request, tag_id):
 @cache_page(60)
 @view_count
 def categories(request, categ_id):
-    """ Renvoi tous les articles appartenant à une catégorie """
+    """ return all posts within a category @todo: replace categ_id with categ name"""
     context = RequestContext(request, {
         'blog_posts': Post.objects.filter(Categorie__pk=categ_id, Publish=True),
         'blog_categorie': Categorie.objects.get(id=categ_id).Nom

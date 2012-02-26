@@ -207,7 +207,11 @@ class BLOG_CONFIG:
         year =      'blog/bydate.html'
         all_post =  'blog/all.html'
         search =    'blog/search.html'
+        all =       'blog/all.html'
     Download = "downloads"
+    
+    class EmailTemplates:
+        newcommentary = "newcomment"
 
 EMAIL_HOST = ''
 EMAIL_USER = ''
