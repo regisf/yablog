@@ -1,3 +1,4 @@
+==============================
 Yet Another Django Blog System
 ==============================
 
@@ -13,7 +14,10 @@ YaBlog is:
     * Written in Python
     * Fast
     * Minimalistic
+    
+You can see a live example at http://www.regisblog.fr/ (in french)
 
+--------------
 Prerequirement
 --------------
 
@@ -22,8 +26,9 @@ Django templating system.
 
 You should know how install a Django App.
 
+---------------------
 Optionnal requirement
---------------------
+---------------------
 
 YaBlog works better with:
     * Grappelli : https://github.com/sehmaschine/django-grappelli
@@ -32,6 +37,7 @@ YaBlog works better with:
 
 For database evolution, I usually prefer django-evolution.
 
+------------------
 Local installation
 ------------------
 
@@ -78,6 +84,7 @@ http://www.djangoproject.com/ .
    
    (see Notification)
 
+---------
 Templates
 ---------
 With Django you don't have to reinvent the wheel. YaBlog use the Django template
@@ -86,16 +93,17 @@ system with few calls to the API.
 
 All templates name are registred in the settings.py file in BLOG_CONFIG class
 (~ line 200).
+
 For the full featured blog create 9 templates :
     * index.html : the blog home page
     * all.html : display all blog entries
     * tags.html : display all blog entries by tag
     * categories.html : display all blog entries by category
-    * month : display all blog entries for a particular month 
-    * year : display all blog entries for a year
-    * search : display all blog entries after a search
+    * bydate.html : display all blog entries for a particular month or a particular year
+    * search.html : display all blog entries after a search
+    * post.html : display a particular post
 
-For a perfect work, YaBlog need only one template :  index.html, the blog home
+For a simple blog, YaBlog need only one template :  index.html, the blog home
 page.
 
 In the Template Context Processor, YaBlog define a blog object. All the API
@@ -107,20 +115,77 @@ blog.last_posts : The blog last posts limited with the Preference.maxLatestDispl
                   entry (default is 5)
 blog.get_posts: Get all posts
 blog.get_categories: Get all categories
+blog.get_tags: Get all post tags with there weight as tuple
+blog.get_history: Get all history as a dictionnary. Year are keys and the values
+                  a month list.
+                  
 
+Using get_tags (doing a tag cloud):
+    This API was thougth for a tag cloud. blog.get_tags will return a list of
+    tuple containing all tags : (count, size, tag)
+    count: How many post have this tag
+    size: the tag weight from 0 to 5
+    tag: the tag name.
+    
+    You should see a example implementation in root.html 
    
+--------
 Capatcha
 --------
-Todo
+For commentaries, user must identify themself as human if they want to leave a message.
 
+Configuration
+-------------
+Go to the /admin/capatcha/preferences and add a entry.
+You have to upload the captcha font and the captcha background.
+Save this preference. That's all.
+
+Using in template
+-----------------
+You must load captcha template tags with {% load capatcha_tags %}.
+Create captcha somewhere in the template with {% create_capatcha %}. This tag
+will create a new context key named capatcha. To display it simply type :
+<img src="{{ capatcha.path }}" alt="Nothing to say :)"/>
+<input type="text" name="capatcha" />
+
+When sending the post commentary, Yablog will compare if the given capatcha
+is well typed.
+
+------------
 Notification
 ------------
-Todo
+The notification module you to send emails that informs you about the blog life.
+It is based on the Django Templating system and is able to send UTF-8 emails.
 
+Configuration
+-------------
+The first step is to create a Notification preference. In the administation (/admin/)
+select Notification application en click on "Preferences". Create a new entry.
+Yablog will try to get the first preference entry.
+Fill the form with appropriated entries:
+    * Preference name
+    * Sender email
+    * SMTP server informations (login, pasword, address, port)
+    * Is this server account is the default account.
+    
+If your email server doesn't need authentification, select "Anonymous" field.
+Save this preference.
+    
+
+Create at least one template
+----------------------------
+At least the Notification app need *one* template : newcomment as defined with 
+BLOG_CONFIG.EmailTemplates.newcommentary in settings.py file.
+In Notification admin create a new template named "newcomment". This template
+will inform you that a new commentary is waiting for you moderation.
+
+
+-----------------------
 Production Installation
 -----------------------
 Todo
 
+------------------
 Database evolution
 ------------------
 Todo
