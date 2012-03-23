@@ -36,7 +36,7 @@ def getnext(request):
         if request.is_ajax():
             articles = int(request.GET.get("articles"))
             pref = Preference.objects.get(id=1)
-
+            ajax_log("Count %d " % articles)
             context = RequestContext(request,{
                 'blog' : {
                     'get_last_posts' : Post.objects.filter(Publish=True)[articles:articles+5],
