@@ -46,7 +46,6 @@ def getnext(request):
             })
         return HttpResponse(loader.get_template('blog/nextpost.html').render(context))    
     except Exception as e:
-        #print e
-        pass
+        ajax_log("GetNext : %s" % e)
     
     return HttpResponseBadRequest("Bad request")

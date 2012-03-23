@@ -33,6 +33,7 @@ from django.shortcuts import render_to_response
 from django.views.decorators.cache import cache_page
 from django.db.models import Q
 from django.utils.translation import ugettext as _
+from django.contrib.sites.models import Site
 
 from notification import notification_send, ajax_log
 from blog.models import *
@@ -41,7 +42,7 @@ from appview.decorators import view_count
 
 def robot(request):
     """ Return robot.txt """
-    return HttpResponse("""User-agent: *\nAllow: *\nSitemap: http://www.regisblog.fr/sitemap.xml\n""", mimetype="text/plain")
+    return HttpResponse("""User-agent: *\nAllow: *\nSitemap: http://%s/sitemap.xml\n""" % Site.get_current().domain, mimetype="text/plain")
     
 def maintenance(request):
     """ When you need to work quietly on your blog. Uncomment urls.py line  """

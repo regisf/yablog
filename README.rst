@@ -111,13 +111,11 @@ calls are from this object (e.g.: {{ blog.do_that }})
 
 blog.get_title : The blog title
 blog.get_subtitle : The blog subtitle
-blog.last_posts : The blog last posts limited with the Preference.maxLatestDisplayed
-                  entry (default is 5)
+blog.last_posts : The blog last posts limited with the Preference.maxLatestDisplayed entry (default is 5)
 blog.get_posts: Get all posts
 blog.get_categories: Get all categories
 blog.get_tags: Get all post tags with there weight as tuple
-blog.get_history: Get all history as a dictionnary. Year are keys and the values
-                  a month list.
+blog.get_history: Get all history as a dictionnary. Year are keys and the values a month list.
                   
 
 Using get_tags (doing a tag cloud):
@@ -182,3 +180,8 @@ will inform you that a new commentary is waiting for you moderation.
 
 
 You can now create a new template for your blog and send it in production.
+
+---------
+Deploying
+---------
+
