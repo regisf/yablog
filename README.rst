@@ -180,14 +180,5 @@ In Notification admin create a new template named "newcomment". This template
 will inform you that a new commentary is waiting for you moderation.
 
 
------------------------
-Production Installation
------------------------
-Todo
 
-------------------
-Database evolution
-------------------
-Todo
-
-
+You can now create a new template for your blog and send it in production.

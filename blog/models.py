@@ -60,6 +60,7 @@ class Author(models.Model):
         super(Author, self).save(*args, **kwargs)
         
     def admin_get_image(self):
+        """ Display author picture in the administration """
         if self.image is not None:
             return '<img src="%s" />' % self.image.url
         return "No Image"
@@ -158,7 +159,7 @@ class Tag(models.Model):
         return self.Nom
     
     def get_articles_count(self):
-        return Post.objects.filter(Tags=self).count()
+        return Post.objects.filter(Tags=self, Publish=True).count()
     get_articles_count.short_description = "Nombre d'articles"
     
 class Categorie(models.Model):
@@ -192,23 +193,3 @@ class Comment(models.Model):
 
     def gravatar(self):
         return hashlib.md5(self.Email).hexdigest()+".png";
-        
-def convert_time():
-    import MySQLdb
-    conn = MySQLdb.connect('localhost', 'regisblog', 'regisblog', 'regisblog')
-    cursor = conn.cursor()
-    cursor.execute("SELECT CreationDate, id FROM blog_post")
-    cursor2 = conn.cursor()
-    for r in cursor.fetchall():
-        cursor2.execute("UPDATE blog_post SET CreationDateTime='%s' WHERE id='%s'" % (str(r[0]), r[1]))    
-    print "Done"
-
-def convert_time_2():
-    import MySQLdb
-    conn = MySQLdb.connect('localhost', 'regisblog', 'regisblog', 'regisblog')
-    cursor = conn.cursor()
-    cursor.execute("SELECT CreationDateTime, id FROM blog_post")
-    cursor2 = conn.cursor()
-    for r in cursor.fetchall():
-        cursor2.execute("UPDATE blog_post SET CreationDate='%s' WHERE id='%s'" % (str(r[0]), r[1]))    
-    print "Done"

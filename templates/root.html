@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-    {% load blog_tags %}
+    {% load blog_tags i18n %}
     <head>
         <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
         <title>{{ blog.get_title }} - {% block title %}{% endblock %}</title>
-        <!--[if lte IE 8]>
+        <!--[if lte IE 9]>
         <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script></style>
         <![endif]-->
     </head>
@@ -58,10 +58,10 @@
                     {%for year, monthes in blog.get_history.items%}
                     <div class="item">
                         <div class="year">
-                            <a href="{%url show_by_year year%}" title="Voir pour l'année {{year}}">{{year}}</a></div>
+                            <a href="{%url show_by_year year%}" title="{% trans "Voir pour l\'année"%} {{year}}">{{year}}</a></div>
                         {%for month in monthes%}
                         <div class="month">
-                            <a href="{%url show_by_month year month%}" title="Voir pour le mois de {{month|tostring}} de l'année {{year}}">{{month|tostring}}</a>
+                            <a href="{%url show_by_month year month%}" title="{% trans 'Voir pour le mois de'%} {{month|tostring}} {% trans "de l\'année"%} {{year}}">{{month|tostring}}</a>
                         </div>
                         {%endfor%}
                     </div>

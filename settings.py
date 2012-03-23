@@ -199,19 +199,30 @@ CACHES = {
     
 class BLOG_CONFIG:
     class Templates:
+        # The main file
         index =     'blog/index.html'
+        # Display post entry
         post =      'blog/post.html'
+        # Display posts for a tag
         tags =      'blog/tags.html'
+        # Display posts for a category
         categories ='blog/tags.html'
+        # Display posts for a month
         month =     'blog/bydate.html'
+        # display posts for a year
         year =      'blog/bydate.html'
+        # display search results
         search =    'blog/search.html'
+        # Display all posts
         all =       'blog/all.html'
+    # The download path
     Download = "downloads"
     
     class EmailTemplates:
+        """ Email templates """
         newcommentary = "newcomment"
 
+# Django email configuration
 EMAIL_HOST = ''
 EMAIL_USER = ''
 EMAIL_PASSWORD = ''

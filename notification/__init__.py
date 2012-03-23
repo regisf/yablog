@@ -24,9 +24,6 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 A better notification system
-
-(c) FLORET Interactive 2011
-
 """
 
 import smtplib

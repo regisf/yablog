@@ -124,3 +124,4 @@ def blog_init(request):
         'email': request.session.get('email', ''),
         'name': request.session.get('nom', '')
     }
+blog_init.is_usable = True

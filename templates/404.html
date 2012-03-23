@@ -1,6 +1,6 @@
-{%extends 'root.html'%}
-{%block title%}Erreur{%endblock%}
-{%block content%}
-<h3>Le billet que vous avez demandé n'existe pas.</h3>
-<a href="/">Retour à l'accueil</a>
-{%endblock%}
+{% extends 'root.html' %}
+{% block title %}{% trans 'Error' %}{% endblock %}
+{% block content %}
+<h3>{% trans "The page you're seeking doesn't exist" %}</h3>
+<a href="{% url home %}">{% trans 'Back to home page' %}</a>
+{% endblock %}
