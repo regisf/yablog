@@ -87,6 +87,8 @@ class BlogConfig(object):
           min = self._get_min(all)
           max = self._get_max(all)
           slice = max / 5
+          if slice == 0:
+               slice = 1   # Avoid / 0 for small amount of tags
           
           for tag in Tag.objects.all():
               count = tag.get_articles_count()
