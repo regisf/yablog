@@ -36,6 +36,9 @@ def ping_all(sitemap_url='http://www.regisblog.fr/sitemap.xml'):
     from django.contrib.sitemaps import ping_google
     SEARCH_ENGINE_PING_URLS = (
         ('google', 'http://www.google.com/webmasters/tools/ping'),
+        ('technorati', 'http://rpc.technorati.com/rpc/ping'),
+        ('pigomatic', 'http://rpc.pingomatic.com'),
+        ('googleblog', 'http://blogsearch.google.com/ping/RPC2'),
         ('yahoo', 'http://search.yahooapis.com/SiteExplorerService/V1/ping'),
         ('ask', 'http://submissions.ask.com/ping'),
         ('bing', 'http://www.bing.com/webmaster/ping.aspx'),
