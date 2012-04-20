@@ -42,7 +42,7 @@ from appview.decorators import view_count
 
 def robot(request):
     """ Return robot.txt """
-    return HttpResponse("""User-agent: *\nAllow: *\nSitemap: http://%s/sitemap.xml\n""" % Site.get_current().domain, mimetype="text/plain")
+    return HttpResponse("""User-agent: *\nAllow: *\nSitemap: http://%s/sitemap.xml\n""" % Site.objects.get_current().domain, mimetype="text/plain")
     
 def maintenance(request):
     """ When you need to work quietly on your blog. Uncomment urls.py line  """
