@@ -1,0 +1,34 @@
+            {% load capatcha_tags %}
+            <div id="success-message">
+                The message was send to the blog owner. <br>
+                Thank you for you interest.
+            </div>
+            <div style="text-align:center" class="wait">
+                <img src="/staticfiles/images/wait.gif" style="vertical-align: middle"/>&nbsp;Transmission du message
+            </div>
+            <form action="{% url contact_send %}" method="post" id="contact">
+                {% csrf_token %}
+                <div class="row">
+                    <label>Your name</label><input type="text" name="name" placeholder="Your name" />
+                </div>
+                <div class="row">
+                    <label>Your email</label><input type="email" name="email" placeholder="Your email" />
+                </div>
+                <div class="row">
+                    <label>You subject</label><input type="text" name="subject" placeholder="Subject" />
+                </div>
+                <div class="row">
+                    <label>Message</label><textarea name="message" placeholder="Your message"></textarea>
+                </div>
+                <div class="row">
+                    <label>&nbsp;</label>
+                    {% create_capatcha %}
+                    <img src="{{capatcha.path }}" />
+                </div>
+                <div class="row">
+                    <label>Anti spam code</label><input type="text" name="captcha" placeholder="Code" size="10" style="width: 150px;"/>
+                </div>
+                <div class="row">
+                    <label>&nbsp;</label><input type="submit" value="Envoyer" />
+                </div>
+            </form>

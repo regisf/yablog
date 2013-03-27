@@ -24,7 +24,7 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 from django.contrib import admin
 
-from notification.models import *
+from .models import Preference, Template, MailingList
 
 class BaseAdmin(admin.ModelAdmin):
 

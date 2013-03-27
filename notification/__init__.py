@@ -35,7 +35,7 @@ from django import template
 from django.http import Http404
 from django.conf import settings
 
-from notification.models import *
+from .models import *
 
 
 def notification_send(template_shortcut, dest=None, context=None, account_name=None):
