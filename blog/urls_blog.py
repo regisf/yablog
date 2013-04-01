@@ -45,12 +45,4 @@ urlpatterns = patterns('',
     url(r'^rss/$',                           BlogFeed(),                name='rss'),
     url(r'^ajax/getnext/$',                 'yablog.blog.ajax.getnext',             name="get_next"),
     url(r'^search/$',                       'yablog.blog.views.search',             name="search"),
-    
-    url(r'^mobile/gettitles/$',             'yablog.blog.mobile.get_titles',    name="mobile_get_titles"),
-    url(r'^mobile/getpage/$',               'yablog.blog.mobile.get_page',      name="mobile_get_page"),
-    url(r'^mobile/getnext/$',               'yablog.blog.mobile.get_next',      name="mobile_get_next"),
-    url(r'^mobile/gethistory/$',            'yablog.blog.mobile.get_history',   name="mobile_get_history"),
-    url(r'^mobile/search/$',                'yablog.blog.mobile.search',        name="mobile_search"),
-    url(r'^mobile/getbytag/$',              'yablog.blog.mobile.get_by_tag',    name="mobile_get_by_tag"),
-    url(r'^mobile/getbycateg/$',            'yablog.blog.mobile.get_by_categ',  name="mobile_get_by_categ"),
 )
