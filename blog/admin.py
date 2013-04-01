@@ -25,12 +25,8 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib import admin
-<<<<<<< HEAD
-from django.forms.models import BaseInlineFormSet
-=======
-from .models import *
->>>>>>> 2c12d6947f775e6ecdcfa5833dc65e8fc328ad49
 
+from django.forms.models import BaseInlineFormSet
 from .models import (Post, Author, Categorie, Tag,
                      SearchEngine, Comment, Preference,
                      Page, PostTranslation, Language,

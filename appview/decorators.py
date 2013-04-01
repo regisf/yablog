@@ -27,13 +27,7 @@ AppView
 """
 
 import datetime
-<<<<<<< HEAD
 import re
-=======
-
-from yablog.appview.models import Exclude, View
-from yablog.notification import ajax_log
->>>>>>> 2c12d6947f775e6ecdcfa5833dc65e8fc328ad49
 
 from .models import Exclude, View
 from yablog.notification import ajax_log

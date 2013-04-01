@@ -42,15 +42,9 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 
 from yablog.notification import notification_send, ajax_log
-<<<<<<< HEAD
 from .models import Post, Comment, Preference, Tag, Categorie, Page
 from yablog.appview.decorators import view_count
 from yablog.capatcha.templatetags.capatcha_tags import Capatcha
-=======
-from .models import *
-from yablog.appview.decorators import view_count
-
->>>>>>> 2c12d6947f775e6ecdcfa5833dc65e8fc328ad49
 
 def robot(request):
     """ Return robot.txt """

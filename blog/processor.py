@@ -30,7 +30,6 @@ from django.utils.translation import ugettext as _
 from django.contrib.sites.models import Site
 from django.conf import settings
 
-<<<<<<< HEAD
 HAVE_CACHE = True
 try:
     from memcache import Client
@@ -38,9 +37,6 @@ except ImportError:
     HAVE_CACHE = False
     
 from .models import Preference, Post, Categorie, Page
-=======
-from .models import *
->>>>>>> 2c12d6947f775e6ecdcfa5833dc65e8fc328ad49
 
 client = None
 if HAVE_CACHE:
