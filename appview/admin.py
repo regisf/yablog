@@ -31,7 +31,7 @@ Framework to get statistic
 from django.contrib import admin
 from django.db.models import Q
 
-from appview.models import Exclude, View
+from .models import Exclude, View
 
 
 class ViewAdmin(admin.ModelAdmin):

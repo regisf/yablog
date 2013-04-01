@@ -27,8 +27,9 @@ AppView
 """
 
 import datetime
-from appview.models import Exclude, View
-from notification import ajax_log
+
+from yablog.appview.models import Exclude, View
+from yablog.notification import ajax_log
 
 def is_new(request):
     meta = request.META

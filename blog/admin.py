@@ -25,7 +25,7 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib import admin
-from blog.models import *
+from .models import *
 
 class PostAdmin(admin.ModelAdmin):
     list_display=("Title", "Author", 'CreationDateTime', 'Publish','admin_get_view_count', 'admin_get_comments_count')

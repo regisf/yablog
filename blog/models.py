@@ -33,14 +33,14 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 
-from appview.models import View
+from yablog.appview.models import View
 
 try:
     from ckeditor.fields import HTMLField
 except:
     from django.db.models import TextField as HTMLField
 
-from blog import sanitize_name, ping_all
+from . import sanitize_name, ping_all
 
 class Author(models.Model):
     """ Base class for authors """

@@ -28,7 +28,7 @@ Template context processor.
 
 from django.utils.translation import ugettext as _
 
-from blog.models import *
+from .models import *
 
 
 class BlogConfig(object):

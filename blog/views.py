@@ -35,9 +35,9 @@ from django.db.models import Q
 from django.utils.translation import ugettext as _
 from django.contrib.sites.models import Site
 
-from notification import notification_send, ajax_log
-from blog.models import *
-from appview.decorators import view_count
+from yablog.notification import notification_send, ajax_log
+from .models import *
+from yablog.appview.decorators import view_count
 
 
 def robot(request):

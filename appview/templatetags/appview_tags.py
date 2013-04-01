@@ -24,7 +24,7 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 from django import template
 
-from appview.models import View
+from yablog.appview.models import View
 
 register = template.Library()
 
