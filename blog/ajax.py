@@ -22,14 +22,12 @@
 # ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#import time
 
 from django.template import loader, RequestContext
 from django.http import HttpResponse, HttpResponseBadRequest
-from django.core import serializers
 
-from blog.models import Post, Preference
-from notification import ajax_log
+from yablog.blog.models import Post, Preference
+from yablog.notification import ajax_log
 
 def getnext(request):
     try:
@@ -37,7 +35,7 @@ def getnext(request):
         pref = Preference.objects.get(id=1)
         context = RequestContext(request,{
             'blog_last' : {
-                'get_last_posts' : Post.objects.filter(Publish=True)[articles:articles+5],
+                'get_last_posts' : Post.objects.filter(Publish=True)[articles:articles+6],
                 'showFullArticle' : pref.ShowFullArticle,
                 'articleSampleLength' : pref.ArticleSampleLength
             }

@@ -27,7 +27,7 @@
 from django.contrib.syndication.views import Feed
 from django.contrib.sites.models import Site
 
-from blog.models import Post, Preference
+from .models import Post, Preference
 
 class BlogFeed(Feed):
     title = Preference.objects.get_name()

@@ -41,7 +41,7 @@ def appview_get_view_count_for(p,t):
     if len(args) != 4:
         raise AppViewArgumentMissing()
         
-    name, origin, action, context_var = args
+    unused_name, origin, action, context_var = args
     
     if action != "as":
         raise AppViewWrongAction()
@@ -49,6 +49,6 @@ def appview_get_view_count_for(p,t):
     class AppViewInit(template.Node):
         def render(self, context):
             url = template.Variable(origin).resolve(context)
-            context[context_var] = View.objects.filter(internal_url=url).count()
+            context[context_var] = View.objects.filter(internal_url=url).only('id').count()
             return ''
     return AppViewInit()

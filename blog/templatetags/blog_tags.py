@@ -29,9 +29,10 @@
 import re
 
 from django import template
+
 from django.utils.translation import ugettext as _
 
-from blog.models import *
+from yablog.blog.models import Post, Page_translation, PostTranslation, CategoryTrans
 
 register = template.Library()
 
@@ -43,11 +44,11 @@ MONTH = {
      5 : _('May'),
      6 : _('June'),
      7 : _('July'),
-     8 : _('Auguste'),
+     8 : _('August'),
      9 : _('September'),
     10 : _('October'),
     11 : _('November'),
-    12 : _('Dcember'),
+    12 : _('December'),
 }
 
 @register.tag
@@ -98,3 +99,38 @@ def boldize(value, keywords):
         value = regex.sub('<strong>%s</strong>' % k, value, re.IGNORECASE | re.DOTALL)
     return value
     
+@register.filter
+def get_page_title_translated(page, lang):
+     try:
+          return Page_translation.objects.get(Page=page, Language__Code__startswith=lang).Name
+     except:
+          pass
+     return page.Name
+
+@register.filter
+def get_translated_title(title, lang):
+     try:
+          return PostTranslation.objects.get(Post__Title=title, Language__Code__startswith=lang).Title
+     except:
+          pass
+     return title
+
+@register.filter
+def get_translated_content(post,prefered_lang, request=None):
+     try:
+          content =  PostTranslation.objects.get(Post=post, Language__Code__startswith=prefered_lang).Content
+          if re.search(r'{{%.*?%}}|{{{.*?}}}', content) is not None:
+               content = content.replace('{{%', '{%').replace('%}}', '%}').replace('{{{', '{{').replace('}}}', '}}')
+               content = template.Template(content).render(template.Context())
+          return content
+     except:
+          pass
+     return post.Content
+
+@register.filter
+def get_translated_category(categ, prefered_lang):
+     try:
+          return CategoryTrans.objects.get(Category__Nom=categ, Language__Code__startswith=prefered_lang).Name
+     except:
+          pass
+     return categ

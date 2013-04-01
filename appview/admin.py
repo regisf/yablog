@@ -27,6 +27,7 @@ AppView
 
 Framework to get statistic
 """
+import re
 
 from django.contrib import admin
 from django.db.models import Q
@@ -35,7 +36,7 @@ from .models import Exclude, View
 
 
 class ViewAdmin(admin.ModelAdmin):
-    list_display = ['ip', 'session_key', 'internal_url', 'last_view', 'admin_get_browser',]
+    list_display = ['ip', 'session_key', 'internal_url', 'last_view', 'lang', 'admin_get_browser',]
     actions = ['add_exclusion', 'add_exclusion_and_delele', 'delete_excluded',]
     
     def add_exclusion(self, request, queryset):
@@ -73,9 +74,102 @@ class ViewAdmin(admin.ModelAdmin):
                     count += 1
         self.message_user(request, "%d entries were deleted" % count)
     delete_excluded.short_description = "Delete entries with exclusion rules."
-    
+        
 class ExcludeAdmin(admin.ModelAdmin):
     list_display = ['name', 'exclude_IP', 'exclude_regex', ]
     
 admin.site.register(Exclude, ExcludeAdmin)
 admin.site.register(View, ViewAdmin)
+
+
+def is_mobile(browser):
+    """ Test if the browser is a Mobile Browser """
+    return re.search(r'webos|Symbianos|iphone|android|blackberry|opera\smini|opera\smobi|palm|^nokia|^samsung|^lg|^sonyericsson', browser, re.I) is not None
+        
+
+def stats(request):
+    """ 
+    Display statistics for the web site
+    """
+    from django.shortcuts import render_to_response, RequestContext
+    
+    views = list(View.objects.all().only('internal_url', 'browser'))
+    urls = {}
+    mob_vs_desk = { 'desktop': 0, 'mobile': 0 }
+    for view in views:
+        if is_mobile(view.browser):
+            mob_vs_desk['mobile'] += 1
+        else:
+            mob_vs_desk['desktop'] += 1
+            
+        if not urls.has_key(view.internal_url):
+            urls[view.internal_url] = 0
+        urls[view.internal_url] += 1
+    stats = []
+    count = 0
+    for url in urls:
+        stats.append({'url': url, 'count': urls[url]})
+        count += urls[url]
+    stats = sorted(stats, key=lambda k: k['count'], reverse=True)
+    return render_to_response('admin/appview/view/display_stats.html', 
+                              RequestContext(request, { 'stats' : stats,
+                                                        'total' : count,
+                                                        'views':  mob_vs_desk
+                                                      }
+                                             )
+                              )
+
+
+def flush_views(request):
+    """ 
+    Remove views with exclusion rules
+    @TODO: Use admin.Model instead
+    """
+    from django.shortcuts import render_to_response, RequestContext, HttpResponseRedirect
+
+    views = list(View.objects.all())
+    excluded = list(Exclude.objects.all())
+    ips = []
+    exclude_brows = []
+    for view in excluded:
+#        ips.append(view.exclude_IP)
+        exclude_brows.append(view.exclude_regex)
+    
+    deleted = []
+    for view in list(views.all()):
+        for exc in exclude_brows:
+            if re.search(exc, view.browser, re.I):
+                deleted.append(view.pk)
+            
+    deleted = views.filter(Q(ip__in=ips) | Q(pk__in=deleted))
+    if len(deleted) == 0:
+        return HttpResponseRedirect(request.META['HTTP_REFERER'])
+    
+    if request.method == 'POST':
+        deleted.delete()
+        return HttpResponseRedirect(request.META['HTTP_REFERER'])
+        
+    return render_to_response('admin/appview/view/delete_flush_confirm.html', 
+                              RequestContext(request, {
+                                    'todelete':deleted
+                              }))
+    
+def history(request):
+    """
+    Display stats by day
+    """
+    from django.shortcuts import render_to_response, RequestContext
+    
+    views = list(View.objects.all())
+    year = {}
+    for v in views:
+        if not year.has_key(v.last_view.year):
+            year[v.last_view.year] = {}
+            
+        if not v.last_view.month in year[v.last_view.year]:
+            year[v.last_view.year][v.last_view.month] = {}
+
+        if not year[v.last_view.year][v.last_view.month].has_key(v.last_view.day):
+            year[v.last_view.year][v.last_view.month][v.last_view.day] = 0
+        year[v.last_view.year][v.last_view.month][v.last_view.day] += 1
+    return render_to_response('admin/appview/view/history_stat.html', RequestContext(request, { 'stats': year }))

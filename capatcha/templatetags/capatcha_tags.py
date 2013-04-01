@@ -41,7 +41,8 @@ import datetime
 from PIL import Image, ImageDraw, ImageFont
 from django import template
 from django.conf import settings
-from capatcha.models import Preference
+
+from yablog.capatcha.models import Preference
 
 register = template.Library()
 
@@ -67,7 +68,7 @@ class Capatcha(object):
                 
         # Create the new one
         random.seed(os.urandom(10))
-        code = ''.join([random.choice(pref.charset) for i in xrange(pref.size)])
+        code = ''.join([random.choice(pref.charset) for unused_i in xrange(pref.size)])
         img = Image.open(pref.background.path)
         width, height = img.size
         font = ImageFont.truetype(pref.font.path, 42)

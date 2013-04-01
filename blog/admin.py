@@ -25,27 +25,97 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib import admin
-from .models import *
+from django.forms.models import BaseInlineFormSet
 
+from .models import (Post, Author, Categorie, Tag,
+                     SearchEngine, Comment, Preference,
+                     Page, PostTranslation, Language,
+                     Page_translation, CategoryTrans)
+
+class _PostTranslationInline(BaseInlineFormSet):
+    def _construct_form(self, i, **kwargs):
+        form = super(_PostTranslationInline, self)._construct_form(i, **kwargs)
+        form.empty_permitted = True
+        return form
+    
+class PostTranslationInline(admin.StackedInline):
+    model = PostTranslation
+    extra = 1
+    formset = _PostTranslationInline
+    
 class PostAdmin(admin.ModelAdmin):
-    list_display=("Title", "Author", 'CreationDateTime', 'Publish','admin_get_view_count', 'admin_get_comments_count')
+    previous_next_buttons = True
+    list_display = ("Title", "admin_get_author", 'CreationDateTime', 'Publish',
+                    'admin_get_view_count', 'admin_get_comments_count',
+                    'admin_get_page', "EnableComment", "EnableNavigation",
+                    'admin_get_flag')
+    
     search_fields = ('Content',)
-    list_filter = ('Tags', 'Categorie',"Author", 'Publish', )
-    list_editatble =  ('Publish', )
-#    date_hierarchy = ('CreationDateTime',)
+    list_filter = ('Tags', 'Categorie', "Author", 'Publish', 'Page' )
+    list_editable =  ('Publish', )
+    date_hierarchy = 'CreationDateTime'
+    inlines = (PostTranslationInline,)
+
+class PostTranslationAdmin(admin.ModelAdmin):
+    list_display = ("__unicode__", )
     
 class AuthorAdmin(admin.ModelAdmin):
     list_display = ('admin_get_image', '__unicode__', 'admin_get_post_count')
     
+class _CategoryTranslationInline(BaseInlineFormSet):
+    def _construct_form(self, i, **kwargs):
+        form = super(_CategoryTranslationInline, self)._construct_form(i, **kwargs)
+        form.empty_permitted = True
+        return form
+    
+class CategoryTranslationInline(admin.StackedInline):
+    model = CategoryTrans
+    extra = 1
+    formset = _CategoryTranslationInline
+    
 class CategorieAdmin(admin.ModelAdmin):
-    list_display = ('Nom', 'get_articles_count', )
+    list_display = ('Nom', 'admin_get_icon', 'get_articles_count', 'DisplayInList', )
+    list_editable = ('DisplayInList', )
+    inlines = (CategoryTranslationInline, )
     
 class TagAdmin(admin.ModelAdmin):
     list_display = ('Nom', 'get_articles_count', )
     
+class SearchEngineAdmin(admin.ModelAdmin):
+    list_display = ('name', 'url', 'ping_count')
+    
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('__unicode__', 'CreationDate', 'UserName', 'Show')
+    list_editable = ('Show', )
+    date_hierarchy = 'CreationDate'
+
+class PageInlineTranslation(BaseInlineFormSet):
+    """ Found on Stackoverflow """
+    def _construct_form(self, i, **kwargs):
+        form = super(PageInlineTranslation, self)._construct_form(i, **kwargs)
+        form.empty_permitted = True
+        return form
+
+class PageTranslationInline(admin.TabularInline):
+    model = Page_translation
+    extra = 1
+    formset = PageInlineTranslation
+    
+class PageAdmin(admin.ModelAdmin):
+    list_display = ("__unicode__", "Shortcut", "Position", 'Default', )
+    inlines = [PageTranslationInline,]
+    sortable_field_name = "Position"
+    list_editable = ('Position', )
+    
+
+admin.site.register(Page, PageAdmin)
 admin.site.register(Author, AuthorAdmin)
 admin.site.register(Post, PostAdmin)
 admin.site.register(Tag, TagAdmin)
+admin.site.register(CategoryTrans)
 admin.site.register(Categorie, CategorieAdmin)
-admin.site.register(Comment)
+admin.site.register(Comment, CommentAdmin)
 admin.site.register(Preference)
+admin.site.register(SearchEngine, SearchEngineAdmin)
+admin.site.register(Language)
+admin.site.register(PostTranslation, PostTranslationAdmin)

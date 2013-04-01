@@ -22,43 +22,18 @@
 # ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-import unicodedata
-import re
 
-   
-# Code from internet
-def ping_all(sitemap_url='http://www.regisblog.fr/sitemap.xml'):
-    """
-    Pings the popular search engines, Google, Yahoo, ASK, and
-    Bing, to let them know that you have updated your
-    site's sitemap. Returns successfully pinged servers.
-    """
-    from django.contrib.sitemaps import ping_google
-    SEARCH_ENGINE_PING_URLS = (
-        ('google', 'http://www.google.com/webmasters/tools/ping'),
-        ('technorati', 'http://rpc.technorati.com/rpc/ping'),
-        ('pigomatic', 'http://rpc.pingomatic.com'),
-        ('googleblog', 'http://blogsearch.google.com/ping/RPC2'),
-        ('yahoo', 'http://search.yahooapis.com/SiteExplorerService/V1/ping'),
-        ('ask', 'http://submissions.ask.com/ping'),
-        ('bing', 'http://www.bing.com/webmaster/ping.aspx'),
-    )
-    successfully_pinged = []
-    for (site, url) in SEARCH_ENGINE_PING_URLS:
-        try:
-            ping_google(sitemap_url=sitemap_url, ping_url=url)
-            pinged = True
-        except:
-            pinged = False
-        if pinged:
-            successfully_pinged.append(site)
-    return successfully_pinged
-    
-def sanitize_name(name):
-    """ Ensure to remove all non-alphanum characters """
-    name = unicodedata.normalize('NFKD', name).encode('ascii','ignore')
-    for c in "&\"'()'ç=²¹~#{}[]+°$£^*µ%!§:/;.,?":
-        name = name.replace(c,"")            
-    name = name.lower().strip()
-    name = re.sub("\s","-",re.sub("\s+$","",name))
-    return name
+from django.contrib.sitemaps import Sitemap
+from .models import Post
+
+
+class BlogSitemap(Sitemap):
+    changefreq = "never"
+    priority = 0.5
+
+    def items(self):
+        return Post.objects.filter(Publish=True)
+
+    def lastmod(self, obj):
+        return obj.CreationDateTime
+

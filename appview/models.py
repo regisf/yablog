@@ -51,8 +51,8 @@ class View(models.Model):
     ip = models.IPAddressField(blank=True)
     browser = models.CharField(max_length=255)
     internal_url = models.CharField(max_length=255)
-    lang = models.CharField(max_length=40)
-    session_key = models.CharField(max_length=40)
+    lang = models.CharField(max_length=40, default="Not found")
+    session_key = models.CharField(max_length=40, blank=True, null=True)
     
     def __unicode__(self):
         return self.ip

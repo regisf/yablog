@@ -27,36 +27,50 @@ AppView
 """
 
 import datetime
+import re
 
-from yablog.appview.models import Exclude, View
+from .models import Exclude, View
 from yablog.notification import ajax_log
 
-def is_new(request):
+def is_excludable(request):
+    """
+    Test if the user is know (using its key)
+    """
     meta = request.META
-    for ex in Exclude.objects.all():        
-        if ex.exclude_IP == meta.get('REMOTE_ADDR') or  ex.match(meta.get('HTTP_USER_AGENT')):
-            return False
-    return View.objects.filter(session_key=request.session._session_key, internal_url=meta.get('PATH_INFO')).count() == 0
-    
+    excluded = Exclude.objects.all()
+    excludable = excluded.filter(exclude_IP=meta.get('REMOTE_ADDR')).only('id').count() > 0
+    excludable |= View.objects.filter(session_key=request.session._session_key, 
+                                     internal_url=meta.get('PATH_INFO')).only('id').count() > 0
+    exclusion = excluded.all().only('exclude_regex')
+    for exc in list(exclusion):
+        if len(exc.exclude_regex.strip()) > 0:
+            excludable |= re.search(exc.exclude_regex, meta.get('HTTP_USER_AGENT'), re.I) is not None
+    return excludable
+
 def view_count(f):
+    """
+    Count the number of view regarding the exclusion list or if the user have seen the post
+    """
     def render(*args, **kwargs):
-            meta = args[0].META
-            exclud = Exclude.objects.all()
-            
-            save = is_new(args[0])
-            if save == True:
+        try:
+            meta = args[0].META            
+            if  is_excludable(args[0]) == False:
                 view = View()
                 view.last_view = datetime.datetime.now()
                 view.ip = meta.get('REMOTE_ADDR')
                 view.browser = meta.get('HTTP_USER_AGENT')
                 view.internal_url = meta.get('PATH_INFO')
-                view.lang = meta.get('HTTP_ACCEPT_LANGUAGE')
+                view.lang = meta.get('HTTP_ACCEPT_LANGUAGE') or "Not set"
                 try:
                     view.session_key = args[0].session.session_key
                 except Exception as e:
-                    ajax_log("view_count : %s " % e)
-                    views.session_key = "error"
+                    ajax_log("app_view.view_count (get session key) : %s " % e)
+                    view.session_key = "error"
                 view.save()
-            return f(*args, **kwargs)
+        except Exception as e:
+            # Google which use python urllib make this routine crash. Ignore it.
+            ajax_log("app_view.view_count : %s" % e)
+        
+        return f(*args, **kwargs)
             
     return render
