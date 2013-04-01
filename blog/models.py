@@ -39,13 +39,17 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 
 from yablog.appview.models import View
+<<<<<<< HEAD
 from yablog.notification import ajax_log
+=======
+>>>>>>> 2c12d6947f775e6ecdcfa5833dc65e8fc328ad49
 
 try:
     from ckeditor.fields import HTMLField
 except:
     from django.db.models import TextField as HTMLField
 
+<<<<<<< HEAD
 from django.contrib.sitemaps import ping_google
    
 
@@ -83,6 +87,9 @@ def sanitize_name(name):
     name = name.lower().strip()
     name = re.sub("\s","-",re.sub("\s+$","",name))
     return name
+=======
+from . import sanitize_name, ping_all
+>>>>>>> 2c12d6947f775e6ecdcfa5833dc65e8fc328ad49
 
 class Page_translation(models.Model):
     """
