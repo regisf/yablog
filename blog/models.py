@@ -261,6 +261,12 @@ class Post(models.Model):
         except:
             pass
     
+    def get_translations(self ):
+        """
+        
+        """
+        return list(PostTranslation.objects.filter(Post=self))
+    
     
 class Language(models.Model):
     """
@@ -271,7 +277,11 @@ class Language(models.Model):
     Flag = models.ImageField(upload_to="flags", verbose_name=("Flag"), help_text=_("The flag for the code. See http://"))
     
     def __unicode__(self):
-        return self.Name
+        return self.Code
+    
+    def get_url(self, ):
+        return "?lang={0}".format(self.Code)
+    
     
 class PreferenceManager(models.Manager):
     """

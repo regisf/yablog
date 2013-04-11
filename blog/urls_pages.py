@@ -26,7 +26,6 @@
 
 from django.conf.urls.defaults import patterns, url
 
-
 urlpatterns = patterns('',
     url(r'^(?P<shortcut>.*?)/(?P<article_short>.*?)/$', 'yablog.blog.views.page_article', name="page_article"),
     url(r'^(?P<shortcut>.*?)/$', 'yablog.blog.views.page', name="page"),

@@ -30,6 +30,8 @@ from django.utils.translation import ugettext as _
 from django.contrib.sites.models import Site
 from django.conf import settings
 
+from yablog.blog.models import Language
+
 HAVE_CACHE = True
 try:
     from memcache import Client
@@ -177,14 +179,21 @@ class BlogConfig(object):
     def get_pages(self):
         return list(Page.objects.all())
     
+class Translation(object):
+    def __init__(self, ):
+        super(Translation, self).__init__()
+        
+    def get_available_languages(self, ):
+        return list(Language.objects.all())
     
+
 def blog_init(request):
     ''' Add all needed variable in the context instead using createContext '''
-    
     return {
         'blog': BlogConfig(),
         'email': request.session.get('email', ''),
         'name': request.session.get('nom', ''),
+        'trans': Translation()
     }
 blog_init.is_usable = True
 
@@ -201,9 +210,20 @@ def local(request):
     }
 
 def findlocale(request):
-    try:
-        return { 'PREFERED_LANG' : request.META['HTTP_ACCEPT_LANGUAGE'].split(',')[0][:2] }
-    except:
-        return { 'PREFERED_LANG' : settings.LANGUAGE_CODE }
+    """
+    Try to get the language. if  it isn't in POST or GET try to get it into HTTP_ACCEPT_LANGUAGE
+    The default langauge is in settings.LANGUAGE_CODE
+    """
+    method = {} # Avoid crash for PUT or DELETE
+    if request.method == "GET":
+        method = request.GET
+    else:
+        method = request.POST
+
+    language = method.get("lang", None)
+    if language is None:
+        language = request.META['HTTP_ACCEPT_LANGUAGE'].split(',')[0][:2]
+    request.session['lang'] =  language
+    return { 'PREFERED_LANG' : language }
 
 
