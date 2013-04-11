@@ -40,6 +40,7 @@ from django.contrib.sites.models import Site
 from django.contrib import messages
 from django.conf import settings
 from django.core.urlresolvers import reverse
+from django.views.decorators.cache import cache_page
 
 from yablog.notification import notification_send, ajax_log
 from .models import Post, Comment, Preference, Tag, Categorie, Page
@@ -55,11 +56,13 @@ def maintenance(request):
     return render_to_response("maintenance.html")
 
 @view_count
+@cache_page(120)
 def index(request):
     """ Page d'accueil du blog """
     return render_to_response(settings.BLOG_CONFIG.Templates.index, RequestContext(request))
 
 @view_count
+@cache_page(120)
 def article_short(request, article_short):
     """ Display a article """
     context = RequestContext(request)
@@ -68,6 +71,7 @@ def article_short(request, article_short):
     return render_to_response(settings.BLOG_CONFIG.Templates.post, context)
 
 @view_count
+@cache_page(120)
 def articles(request):
     """ Show all articles in the blog """
     context = RequestContext(request)
@@ -187,6 +191,7 @@ def comment(request):
     return HttpResponseRedirect('/')
 
 @view_count
+@cache_page(120)
 def tag(request, tag_id):
     """ Send all articles with the tag. @todo: replace pk with sanitize_name(tag_name) """
     context = RequestContext(request)
@@ -199,6 +204,7 @@ def tag(request, tag_id):
     return render_to_response(settings.BLOG_CONFIG.Templates.tags, context)
 
 @view_count
+@cache_page(120)
 def tag_name(request, tag_name):
     """ Return all articles with the tag name """
     context = RequestContext(request)
@@ -211,11 +217,14 @@ def tag_name(request, tag_name):
     })
     return render_to_response(settings.BLOG_CONFIG.Templates.tags, context)
 
+@view_count
+@cache_page(120)
 def categories(request, categ_id):
     """ return all posts within a category @todo: replace categ_id with categ name"""
     return HttpResponsePermanentRedirect(Categorie.objects.get(id=categ_id).get_absolute_url())
 
 @view_count
+@cache_page(120)
 def categories_name(request, categ_name):
     """ return all posts within a category """
     context = RequestContext(request, {
@@ -225,6 +234,7 @@ def categories_name(request, categ_name):
     return render_to_response(settings.BLOG_CONFIG.Templates.categories, context)
 
 @view_count
+@cache_page(120)
 def show_by_date(request, year, month=None):
     """ Show by date. This controller is using for both by_month and by_year """
     query = Q(Publish=True) & Q(CreationDateTime__year=year)
@@ -253,6 +263,7 @@ def search(request):
     return render_to_response(settings.BLOG_CONFIG.Templates.search, context)
 
 @view_count
+@cache_page(120)
 def page(request, shortcut):
     page = Page.objects.get(Shortcut=shortcut)
     if page.Default == True:
@@ -269,6 +280,7 @@ def page(request, shortcut):
     return render_to_response(settings.BLOG_CONFIG.Templates.pages, context)
 
 @view_count
+@cache_page(120)
 def page_article(request, shortcut, article_short):
     context = RequestContext(request)
     context['blog_post'] = Post.objects.get(Shortcut=article_short, Page__Shortcut=shortcut)
