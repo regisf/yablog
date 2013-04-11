@@ -21,6 +21,7 @@ class TranslateLinkModifier(object):
         if 'text/html' in response['content-type']:
             lang = request.session['lang'].strip()
             response.content = re.sub(r'href="(.*?)"', 'href="\\1?lang={0}"'.format(lang), response.content)
+            response.content = re.sub(r'href="(.*?)\?lang=(\w{2})\?lang=%s"' % lang, 'href="\\1?lang=\\2"', response.content)
             del request.session['lang']
 
         return response
