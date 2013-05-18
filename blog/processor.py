@@ -43,7 +43,7 @@ from .models import Preference, Post, Categorie, Page
 client = None
 if HAVE_CACHE:
     client = Client((settings.CACHES['default']['LOCATION'],), settings.CACHE_DURATION)
-    
+
 def cache_me(method):
     def _cache_me(self, *args, **kwargs):
         if client:
@@ -173,8 +173,8 @@ class BlogConfig(object):
      
     @cache_me
     def last_modified(self):
-        return Post.objects.latest('CreationDateTime').CreationDateTime.strftime("%a, %d %b %Y %H:%M:%S")
-    
+        return Post.objects.latest('CreationDateTime').CreationDateTime.strftime("%Y-%m-%d %H:%M:%S")
+
     @cache_me
     def get_pages(self):
         return list(Page.objects.all())
@@ -214,16 +214,20 @@ def findlocale(request):
     Try to get the language. if  it isn't in POST or GET try to get it into HTTP_ACCEPT_LANGUAGE
     The default langauge is in settings.LANGUAGE_CODE
     """
-    method = {} # Avoid crash for PUT or DELETE
-    if request.method == "GET":
-        method = request.GET
-    else:
-        method = request.POST
+    language = settings.LANGUAGE_CODE
+    try:
+        method = {} # Avoid crash for PUT or DELETE
+        if request.method == "GET":
+            method = request.GET
+        else:
+            method = request.POST
 
-    language = method.get("lang", None)
-    if language is None:
-        language = request.META['HTTP_ACCEPT_LANGUAGE'].split(',')[0][:2]
-    request.session['lang'] =  language
+        language = method.get("lang", None)
+        if language is None:
+            language = request.META['HTTP_ACCEPT_LANGUAGE'].split(',')[0][:2]
+        request.session['lang'] =  language
+    except:
+        pass
     return { 'PREFERED_LANG' : language }
 
 
