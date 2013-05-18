@@ -173,7 +173,7 @@ class BlogConfig(object):
      
     @cache_me
     def last_modified(self):
-        return Post.objects.latest('CreationDateTime').CreationDateTime.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
+        return Post.objects.latest('CreationDateTime').CreationDateTime.strftime("%a, %d %b %Y %H:%M:%S")
     
     @cache_me
     def get_pages(self):
