@@ -228,7 +228,11 @@ class Post(models.Model):
     
     def admin_get_flag(self):
         """ Display the language with a flag """
-        return '<img src="'+self.Language.Flag.url+'" alt="flag" />'
+        img = '<img src="'+self.Language.Flag.url+'" alt="flag" />'
+        trans = PostTranslation.objects.filter(Post=false)
+        if trans.count() > 0:
+            img += ' <img src="{0}" alt="flag" />'.format(trans.Language.Flag.url)
+        return img
     admin_get_flag.allow_tags = True
     admin_get_flag.short_description = _("Language")
     
