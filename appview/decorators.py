@@ -57,10 +57,10 @@ def view_count(f):
             if  is_excludable(args[0]) == False:
                 view = View()
                 view.last_view = datetime.datetime.now()
-                view.ip = meta.get('REMOTE_ADDR')
-                view.browser = meta.get('HTTP_USER_AGENT')
-                view.internal_url = meta.get('PATH_INFO')
-                view.lang = meta.get('HTTP_ACCEPT_LANGUAGE') or "Not set"
+                view.ip = meta.get('REMOTE_ADDR', '')
+                view.browser = meta.get('HTTP_USER_AGENT', '')
+                view.internal_url = meta.get('PATH_INFO', '')
+                view.lang = meta.get('HTTP_ACCEPT_LANGUAGE', 'Not set')
                 try:
                     view.session_key = args[0].session.session_key
                 except Exception as e:
