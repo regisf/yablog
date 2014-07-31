@@ -1,7 +1,0 @@
-{% extends 'admin/change_list.html' %}{% load i18n %}
-{% block object-tools-items %}
-<li><a href="{% url admin_appview_history %}">{% trans 'Stats history' %}</a></li>
-<li><a href="{% url admin_appview_stats %}">{% trans 'Show view statitics' %}</a></li>
-<li><a href="{% url admin_appview_flush %}">{% trans 'Flush exclude views' %}</a></li>
-{{ block.super }}
-{% endblock %}
