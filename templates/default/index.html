@@ -1,0 +1,15 @@
+{% extends 'default/base.html' %}
+
+{% block title %}
+{% endblock %}
+
+{% block content %}
+    {% for post in posts %}
+        <section>
+            <header>{{ post.title }}</header>
+            <article>{{ post.content }}</article>
+            <footer>Something here</footer>
+        </section>
+    {% endfor %}
+{% endblock %}
+
